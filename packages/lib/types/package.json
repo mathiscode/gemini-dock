@@ -1,6 +1,5 @@
 {
-  "name": "@gemini-dock/root",
-  "private": true,
+  "name": "@gemini-dock/types",
   "version": "0.1.0",
   "description": "An extensible Gemini server written in TypeScript",
   "license": "MIT",
@@ -16,21 +15,14 @@
     "internet"
   ],
   "packageManager": "pnpm@10.4.1",
-  "scripts": {
-    
+  "exports": {
+    ".": "./dist/index.js"
   },
-  "devDependencies": {
-    
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "dependencies": {
-    
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "pino": "^9.6.0"
   }
 }

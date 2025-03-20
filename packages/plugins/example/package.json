@@ -1,8 +1,7 @@
 {
-  "name": "@gemini-dock/root",
-  "private": true,
+  "name": "@gemini-dock/plugin-example",
   "version": "0.1.0",
-  "description": "An extensible Gemini server written in TypeScript",
+  "description": "An example plugin for Gemini Dock",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -16,21 +15,14 @@
     "internet"
   ],
   "packageManager": "pnpm@10.4.1",
-  "scripts": {
-    
+  "exports": {
+    ".": "./dist/index.js"
   },
-  "devDependencies": {
-    
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "dependencies": {
-    
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "@gemini-dock/types": "workspace:*"
   }
 }

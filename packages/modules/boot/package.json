@@ -1,8 +1,7 @@
 {
-  "name": "@gemini-dock/root",
-  "private": true,
+  "name": "@gemini-dock/module-boot",
   "version": "0.1.0",
-  "description": "An extensible Gemini server written in TypeScript",
+  "description": "A module for the Gemini Dock server that handles the boot process",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -16,21 +15,15 @@
     "internet"
   ],
   "packageManager": "pnpm@10.4.1",
-  "scripts": {
-    
+  "exports": {
+    ".": "./dist/index.js"
   },
-  "devDependencies": {
-    
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "dependencies": {
-    
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "@gemini-dock/types": "workspace:*",
+    "pino": "^9.6.0"
   }
 }

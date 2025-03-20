@@ -1,0 +1,10 @@
+.env
+.env.*
+!env.example
+
+dist
+node_modules
+
+.certs
+sites
+plugins
