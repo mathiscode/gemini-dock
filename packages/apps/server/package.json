@@ -28,11 +28,16 @@
     "gemini-dock": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --external:pino-pretty --packages=external",
+    "build": "esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --external:pino-pretty --packages=external && npm run bin:header",
+    "bin:header": "node ./scripts/bin-header.mjs",
     "cert:complete": "pnpm run cert:generate && pnpm run cert:csr && pnpm run cert:sign",
     "cert:csr": "mkdir -p ./.certs/localhost && openssl req -new -key ./.certs/localhost/private.key -out ./.certs/localhost/csr.pem -subj '/CN=localhost/C=US/ST=New York/L=New York/O=Gemini Dock/OU=Development'",
     "cert:generate": "mkdir -p ./.certs/localhost && openssl genrsa -out ./.certs/localhost/private.key 2048",
     "cert:sign": "mkdir -p ./.certs/localhost && openssl x509 -req -days 365 -in ./.certs/localhost/csr.pem -signkey ./.certs/localhost/private.key -out ./.certs/localhost/certificate.pem",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "dev": "tsx watch --inspect src/index.ts",
     "lint": "eslint src",
     "postinstall": "npm run build",
