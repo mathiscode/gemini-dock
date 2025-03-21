@@ -72,7 +72,7 @@ export default {
 
 ## Setup Certificates
 
-The server will need a certificate for each site you want to serve, and they are stored in the `CERTS_PATH` (or `./.certs` by default) with the subdirectory being the domain, e.g. `.certs/example.com`.
+The server will need a certificate for each site you want to serve, and they are stored in the `CERTS_PATH` environment variable path (or `./.certs` by default) with the subdirectory being the domain, e.g. `.certs/example.com`.
 
 ### Generate a Certificate
 

@@ -40,15 +40,12 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@gemini-dock/protocol": "workspace:*",
     "@gemini-dock/schema": "workspace:*",
     "@gemini-dock/types": "workspace:*",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.11.10",
     "dotenv": "^16.4.7",
-    "drizzle-kit": "^0.30.5",
-    "esbuild": "^0.25.1",
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
@@ -59,8 +56,10 @@
   },
   "dependencies": {
     "@gemini-dock/module-boot": "workspace:*",
-    "@libsql/linux-x64-musl": "^0.5.1",
+    "@gemini-dock/protocol": "workspace:*",
+    "drizzle-kit": "^0.30.5",
     "drizzle-orm": "^0.40.1",
+    "esbuild": "^0.25.1",
     "pino": "^9.6.0",
     "winston": "^3.17.0"
   }
