@@ -1,0 +1,12 @@
+{
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "Gemini Dock",
+      "database": "${workspaceFolder:gemini-dock.ts}/packages/apps/server/gemini-dock.db"
+    }
+  ],
+  "postman.settings.dotenv-detection-notification-visibility": false
+}

@@ -1,11 +1,15 @@
 import pino from 'pino'
 
-export default pino({
-  level: 'debug',
-  transport: {
-    target: process.env.ENVIRONMENT === 'development' ? 'pino-pretty' : 'console',
-    options: {
-      colorize: true
-    }
-  }
-})
+const logger = process.env.ENVIRONMENT === 'development'
+  ? pino({
+      level: 'debug',
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          colorize: true
+        }
+      }
+    })
+  : pino({ level: 'debug' })
+
+export default logger

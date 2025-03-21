@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/site-localhost",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "The development site for Gemini Dock",
   "license": "MIT",
   "author": {
@@ -23,6 +23,14 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@gemini-dock/types": "workspace:*"
+    "@gemini-dock/protocol": "workspace:*",
+    "@gemini-dock/schema": "workspace:*",
+    "@gemini-dock/types": "workspace:*",
+    "bcryptjs": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "drizzle-orm": "^0.40.1",
+    "typescript": "^5.8.2"
   }
 }

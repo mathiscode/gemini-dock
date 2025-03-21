@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/types",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "An extensible Gemini server written in TypeScript",
   "license": "MIT",
   "author": {
@@ -24,5 +24,10 @@
   },
   "dependencies": {
     "pino": "^9.6.0"
+  },
+  "devDependencies": {
+    "@gemini-dock/schema": "workspace:*",
+    "drizzle-orm": "^0.40.1",
+    "typescript": "^5.8.2"
   }
 }

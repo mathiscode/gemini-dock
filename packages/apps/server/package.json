@@ -1,7 +1,8 @@
 {
   "name": "@gemini-dock/server",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "An extensible Gemini server written in TypeScript",
+  "funding": "https://github.com/sponsors/mathiscode",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -14,26 +15,39 @@
     "gopher",
     "internet"
   ],
-  "main": "index.js",
-  "type": "module",
   "packageManager": "pnpm@10.4.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
+    },
+    "./schema": "./src/schema.ts"
+  },
+  "bin": {
+    "gemini-dock": "./dist/index.cjs"
+  },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outdir=dist --platform=node",
+    "build": "esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --external:pino-pretty --packages=external",
     "cert:complete": "pnpm run cert:generate && pnpm run cert:csr && pnpm run cert:sign",
     "cert:csr": "mkdir -p ./.certs/localhost && openssl req -new -key ./.certs/localhost/private.key -out ./.certs/localhost/csr.pem -subj '/CN=localhost/C=US/ST=New York/L=New York/O=Gemini Dock/OU=Development'",
     "cert:generate": "mkdir -p ./.certs/localhost && openssl genrsa -out ./.certs/localhost/private.key 2048",
     "cert:sign": "mkdir -p ./.certs/localhost && openssl x509 -req -days 365 -in ./.certs/localhost/csr.pem -signkey ./.certs/localhost/private.key -out ./.certs/localhost/certificate.pem",
     "dev": "tsx watch --inspect src/index.ts",
     "lint": "eslint src",
-    "start": "tsx src/index.ts"
+    "postinstall": "npm run build",
+    "start": "node dist/index.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@gemini-dock/protocol": "workspace:*",
+    "@gemini-dock/schema": "workspace:*",
     "@gemini-dock/types": "workspace:*",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.11.10",
     "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.30.5",
     "esbuild": "^0.25.1",
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
@@ -41,11 +55,12 @@
     "pino-pretty": "^13.0.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "turbo": "^2.4.4",
     "typescript-eslint": "^8.26.1"
   },
   "dependencies": {
     "@gemini-dock/module-boot": "workspace:*",
+    "@libsql/linux-x64-musl": "^0.5.1",
+    "drizzle-orm": "^0.40.1",
     "pino": "^9.6.0",
     "winston": "^3.17.0"
   }

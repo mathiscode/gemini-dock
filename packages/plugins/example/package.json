@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/plugin-example",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "An example plugin for Gemini Dock",
   "license": "MIT",
   "author": {
@@ -24,5 +24,8 @@
   },
   "dependencies": {
     "@gemini-dock/types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
   }
 }

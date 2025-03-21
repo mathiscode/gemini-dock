@@ -1,7 +1,7 @@
 {
-  "name": "@gemini-dock/module-boot",
+  "name": "@gemini-dock/protocol",
   "version": "0.0.1",
-  "description": "A module for the Gemini Dock server that handles the boot process",
+  "description": "Protocol utilities for Gemini Dock",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -23,8 +23,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@gemini-dock/types": "workspace:*",
-    "pino": "^9.6.0"
+    "@gemini-dock/types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.2"

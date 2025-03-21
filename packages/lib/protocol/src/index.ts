@@ -1,4 +1,4 @@
-const CODES = {
+export const CODES = {
   REQUEST_INPUT: 10,
   REQUEST_PASSWORD: 11,
   SUCCESS: 20,
@@ -21,6 +21,25 @@ const CODES = {
 
 export const respond = (code: number, body?: string, type: string = 'text/gemini') => {
   switch (code) {
+    case CODES.CERTIFICATE_REQUIRED:
+      return { code, type: 'Certificate required for this route' }
+    case CODES.CERTIFICATE_NOT_AUTHORIZED:
+      return { code, type: 'Certificate not authorized for this route' }
+    case CODES.CERTIFICATE_INVALID:
+      return { code, type: 'Certificate invalid for this route' }
+    case CODES.FAIL_BAD_REQUEST:
+    case CODES.FAIL_CGI_ERROR:
+    case CODES.FAIL_GONE:
+    case CODES.FAIL_NOT_FOUND:
+    case CODES.FAIL_PERMANENT:
+    case CODES.FAIL_PROXY_ERROR:
+    case CODES.FAIL_PROXY_REQUEST_ERROR:
+    case CODES.FAIL_SERVER_UNAVAILABLE:
+    case CODES.FAIL_SLOW_DOWN:
+    case CODES.FAIL_TEMPORARY:
+    case CODES.REDIRECT_PERMANENT:
+    case CODES.REDIRECT_TEMPORARY:
+      return { code, type: body }
     case CODES.REQUEST_INPUT:
       return { code, type: body || 'Please provide input' }
     case CODES.REQUEST_PASSWORD:

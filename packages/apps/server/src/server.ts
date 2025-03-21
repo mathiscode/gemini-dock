@@ -1,23 +1,39 @@
 import fs from 'fs'
 import path from 'path'
 import tls from 'tls'
+import type { LibSQLDatabase } from 'drizzle-orm/libsql'
 
 import logger from './logger'
 import type { PluginListener, SiteOptions, SiteRoute } from '@gemini-dock/types'
+import * as schema from '@gemini-dock/schema'
 
+const CERTS_PATH = process.env.CERTS_PATH || '.certs'
 const SITES_PATH = process.env.SITES_PATH || 'sites'
 const SERVER_CERTS: Record<string, { key: Buffer, cert: Buffer }> = {}
 
-for (const site of fs.readdirSync(path.join('.certs'))) {
+if (!fs.existsSync(CERTS_PATH)) {
+  logger.error(`No certificates found at ${CERTS_PATH}, use the CERTS_PATH environment variable to specify a different path`)
+  process.exit(1)
+}
+
+for (const site of fs.readdirSync(path.join(CERTS_PATH))) {
+  if (
+    !fs.existsSync(path.join(CERTS_PATH, site, 'private.key')) ||
+    !fs.existsSync(path.join(CERTS_PATH, site, 'certificate.pem'))
+  ) {
+    logger.error(`No valid certificates found at ${CERTS_PATH}/${site}`)
+    process.exit(1)
+  }
+
   const certData = {
-    key: fs.readFileSync(path.join('.certs', site, 'private.key')),
-    cert: fs.readFileSync(path.join('.certs', site, 'certificate.pem'))
+    key: fs.readFileSync(path.join(CERTS_PATH, site, 'private.key')),
+    cert: fs.readFileSync(path.join(CERTS_PATH, site, 'certificate.pem'))
   }
 
   SERVER_CERTS[site] = certData
 }
 
-export default (requestListeners: PluginListener[] = [], responseListeners: PluginListener[] = []) => {
+export default (db: LibSQLDatabase<typeof schema>, requestListeners: PluginListener[] = [], responseListeners: PluginListener[] = []) => {
   const defaultCert = SERVER_CERTS['localhost'] || Object.values(SERVER_CERTS)[0]
 
   if (!defaultCert) {
@@ -49,22 +65,18 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
   }
 
   const server = tls.createServer(tlsOptions, (socket) => {
-    // @ts-ignore
+    // @ts-expect-error
     const servername = socket.servername || 'unknown'
-    // logger.info(`${socket.remoteAddress}:${socket.remotePort} connected securely to ${servername}`)
-    
     let requestData = Buffer.alloc(0)
     
     socket.on('data', async (data) => {
       requestData = Buffer.concat([requestData, data])
       
-      // Process request if we have a complete Gemini request
-      // Gemini requests end with CR LF
       if (requestData.includes(Buffer.from('\r\n'))) {
         const request = requestData.toString('utf8').trim()
-        logger.info(socket.remoteAddress + ':' + socket.remotePort + ' - ' + request)
+        logger.info(socket.remoteAddress + ':' + socket.remotePort + ' - ' + request.split('?')[0])
         
-        // URI length check
+        // Validate request
         if (request.length > 1024) {
           logger.error('Request is too long')
           socket.write(Buffer.from('59 Bad Request: URI is too long\r\n'))
@@ -74,10 +86,8 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
         
         let url: URL
         try {
-          // Verify URI format
           url = new URL(request)
           
-          // Check for userinfo portion (username/password)
           if (url.username || url.password) {
             logger.error('URI contains userinfo portion')
             socket.write(Buffer.from('59 Bad Request: userinfo not allowed in URI\r\n'))
@@ -85,7 +95,6 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
             return
           }
           
-          // Check for fragments
           if (url.hash) {
             logger.error('URI contains fragment')
             socket.write(Buffer.from('59 Bad Request: fragments not allowed in URI\r\n'))
@@ -138,19 +147,39 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
         
         // Skip response handling if a listener has indicated to stop
         if (!shouldContinue) {
-          // Reset request buffer and continue listening
+          logger.info(socket.remoteAddress + ':' + socket.remotePort + ' - Request listener indicated to stop processing the request')
           requestData = Buffer.alloc(0)
+          socket.destroy()
           return
         }
 
         // Process site
         try {
-          const site = await import(path.join(process.cwd(), SITES_PATH, servername))
+          const sitePackage = JSON.parse(fs.readFileSync(path.join(process.cwd(), SITES_PATH, servername, 'package.json'), 'utf8'))
+
+          let main
+          if (!main) main = sitePackage.exports?.['.']
+          if (!main) main = sitePackage.main
+          if (!main) main = sitePackage.module
+          if (!main) main = 'index.js'
+
+          const site = await import(path.join(process.cwd(), SITES_PATH, servername, main))
           const root = '/' + url.pathname.split('/')[1]
           const certificate = socket.getPeerCertificate()
-          const siteResponse = (site.routes[root] as SiteRoute)({
+
+          const route = site.routes[root] as SiteRoute // yo dawg 🎳
+          if (!route) {
+            logger.error('No route found for ' + root)
+            socket.write(Buffer.from('51 Route not found\r\n'))
+            socket.destroy()
+            return
+          }
+
+          const siteResponse = await route({
+            db,
             url,
             certificate,
+            servername,
             input: Array.from(url.searchParams.entries())?.[0]?.[0],
             logger: logger.child({ site: servername }),
           } as SiteOptions)
@@ -177,9 +206,7 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
               }
             })
             
-            // Allow listeners to modify the response
             if (result && result.modifiedResponse) {
-              logger.debug(`Response being modified by listener from plugin`)
               if (result.modifiedResponse.code !== undefined) {
                 modifiedResponse.code = result.modifiedResponse.code
               }
@@ -195,11 +222,7 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
           }
         }
         
-        // Reset request buffer
         requestData = Buffer.alloc(0)
-        
-        // After sending the complete response, close the connection
-        // using TLS close_notify as required by the Gemini protocol
         logger.info(`${socket.remoteAddress}:${socket.remotePort} - ${modifiedResponse.code} ${modifiedResponse.code !== 20 ? modifiedResponse.type : modifiedResponse.body.length}`)
         socket.write(Buffer.from(`${modifiedResponse.code} ${modifiedResponse.type}\r\n${modifiedResponse.body.split('\n').map(line => line.trim()).join('\r\n')}\r\n`))
         socket.end()
@@ -210,14 +233,6 @@ export default (requestListeners: PluginListener[] = [], responseListeners: Plug
       logger.error('Socket error', error)
       socket.destroy()
     })
-
-    // socket.on('end', () => {
-      // logger.info('Connection ended')
-    // })
-
-    // socket.on('close', () => {
-    //   logger.info('Connection closed')
-    // })
   })
 
   server.on('error', (error) => {

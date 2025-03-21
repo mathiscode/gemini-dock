@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "pnpm"
+    directories:
+      - "/packages/apps/*"
+      - "/packages/lib/*"
+      - "/packages/modules/*"
+      - "/packages/plugins/*"
+      - "/packages/sites/*"
+
+    schedule:
+      interval: "weekly"
+
+    assignees:
+      - "mathiscode"
+
+    reviewers:
+      - "mathiscode"

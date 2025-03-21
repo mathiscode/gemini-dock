@@ -1,8 +1,9 @@
 {
   "name": "@gemini-dock/root",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "An extensible Gemini server written in TypeScript",
+  "funding": "https://github.com/sponsors/mathiscode",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -15,16 +16,13 @@
     "gopher",
     "internet"
   ],
-  "packageManager": "pnpm@10.4.1",
   "scripts": {
-    
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "publish": "pnpm publish -r",
+    "start": "turbo start"
   },
-  "devDependencies": {
-    
-  },
-  "dependencies": {
-    
-  },
+  "packageManager": "pnpm@10.4.1",
   "pnpm": {
     "ignoredBuiltDependencies": [
       "esbuild"
@@ -32,5 +30,9 @@
     "onlyBuiltDependencies": [
       "esbuild"
     ]
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "turbo": "^2.4.4"
   }
 }

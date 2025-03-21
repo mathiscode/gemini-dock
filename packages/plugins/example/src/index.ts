@@ -7,7 +7,7 @@ export default function plugin(_: PluginOptions): PluginReturnObject {
     success: true,
     on: {
       request: [
-        (event) => {
+        () => {
           // logger.info('Request received', event.data.request)
         }
       ],
