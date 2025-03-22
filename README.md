@@ -52,6 +52,7 @@ gemini-dock --help
 ```bash
 npm install -g @gemini-dock/server@latest
 # or npx @gemini-dock/server@latest
+gemini-dock migrate
 ```
 
 ---
