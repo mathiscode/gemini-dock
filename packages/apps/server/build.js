@@ -15,7 +15,7 @@ build({
   platform: 'node',
   banner: { js: '#!/usr/bin/env node\n' },
   define: {
-    'process.env.VERSION': JSON.stringify(pkg.version)
+    'process.env.VERSION': JSON.stringify(pkg.version) // TODO: this didn't get updated in the previous build; check it
   }
 })
 .then(() => {

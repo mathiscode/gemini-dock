@@ -206,7 +206,7 @@ export default (options: {
           const root = '/' + url.pathname.split('/')[1]
           const certificate = socket.getPeerCertificate()
 
-          const route = site[root] as SiteRoute // yo dawg 🎳
+          const route = (site.default?.default || site.default || site)[root] as SiteRoute // yo dawg 🎳
           if (!route) {
             logger.error('No route found for ' + root)
             socket.write(Buffer.from('51 Route not found\r\n'))
@@ -229,6 +229,9 @@ export default (options: {
         } catch (error) {
           logger.error('Error in site: ' + servername)
           logger.error(error)
+          socket.write(Buffer.from('42 Site error\r\n'))
+          socket.destroy()
+          return
         }
         
         // Notify response listeners

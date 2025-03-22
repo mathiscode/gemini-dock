@@ -243,9 +243,11 @@ pluginsCommand
       fs.mkdirSync(path.join(process.cwd(), pluginsPath), { recursive: true })
     }
 
-    execSync(`npm install ${name} -g --prefix ${path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}')}`)
-    execSync(`cp -r ${path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}', 'lib', 'node_modules', name)} ${path.join(process.cwd(), pluginsPath, name)}`)
-    execSync(`rm -rf ${path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}')}`)
+    const tmpPath = path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}')
+    execSync(`npm install ${name} -g --prefix ${tmpPath}`)
+    execSync(`cp -r ${tmpPath}/lib/node_modules/${name} ${path.join(process.cwd(), pluginsPath, name)}`)
+    execSync(`rm -rf ${tmpPath}`)
+    execSync(`cd ${path.join(process.cwd(), pluginsPath, name)} && npm install ; cd..`)
   })
 
 pluginsCommand

@@ -28,7 +28,7 @@
     "gemini-dock": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "node ./build.js",
+    "build": "cp ../../../README.md ./ ; node ./build.js",
     "cert:complete": "pnpm run cert:generate && pnpm run cert:csr && pnpm run cert:sign",
     "cert:csr": "mkdir -p ./.certs/localhost && openssl req -new -key ./.certs/localhost/private.key -out ./.certs/localhost/csr.pem -subj '/CN=localhost/C=US/ST=New York/L=New York/O=Gemini Dock/OU=Development'",
     "cert:generate": "mkdir -p ./.certs/localhost && openssl genrsa -out ./.certs/localhost/private.key 2048",

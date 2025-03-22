@@ -1,7 +1,7 @@
 {
-  "name": "@gemini-dock/site-localhost",
+  "name": "@gemini-dock/site-dock",
   "version": "0.1.0",
-  "description": "The development site for Gemini Dock",
+  "description": "The default demo site for Gemini Dock",
   "license": "MIT",
   "author": {
     "name": "Jay Mathis",
@@ -29,7 +29,6 @@
     "bcryptjs": "^3.0.2"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
     "drizzle-orm": "^0.40.1",
     "typescript": "^5.8.2"
   }
