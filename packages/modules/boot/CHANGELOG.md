@@ -1,4 +1,4 @@
-# @gemini-dock/server
+# @gemini-dock/module-boot
 
 ## 0.1.0
 
@@ -6,14 +6,7 @@
 
 - f6ebae1: now runnable with npx/cli; installable; migrations in deployment; other improvements
 
-## 0.0.3
-
 ### Patch Changes
 
-- prepend shebang line to bin file
-
-## 0.0.2
-
-### Patch Changes
-
-- af53c77: tweaks for deployment testing
+- Updated dependencies [f6ebae1]
+  - @gemini-dock/types@0.1.0

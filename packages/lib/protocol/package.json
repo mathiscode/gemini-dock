@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/protocol",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Protocol utilities for Gemini Dock",
   "license": "MIT",
   "author": {
