@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/module-boot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A module for the Gemini Dock server that handles the boot process",
   "license": "MIT",
   "author": {

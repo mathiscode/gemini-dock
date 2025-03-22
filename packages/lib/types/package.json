@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/types",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An extensible Gemini server written in TypeScript",
   "license": "MIT",
   "author": {

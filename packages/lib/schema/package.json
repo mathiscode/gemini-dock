@@ -1,6 +1,6 @@
 {
   "name": "@gemini-dock/schema",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Database schema for Gemini Dock",
   "license": "MIT",
   "author": {
