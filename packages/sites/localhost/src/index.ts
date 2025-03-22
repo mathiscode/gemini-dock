@@ -214,7 +214,7 @@ export const routes = {
 
         if (subcommand === 'emoji') {
           if (!input) return respond(CODES.REQUEST_INPUT, 'Please enter your new emoji')
-          await db.update(users).set({ emoji: input }).where(and(eq(users.fingerprint, certificate.fingerprint256), eq(users.site, url.hostname)))
+          await db.update(users).set({ emoji: input[0] }).where(and(eq(users.fingerprint, certificate.fingerprint256), eq(users.site, url.hostname)))
           return respond(CODES.REDIRECT_PERMANENT, '/settings/profile')
         }
 

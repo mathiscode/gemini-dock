@@ -380,7 +380,7 @@ sitesCommand
 
       const sitePath = path.join(process.cwd(), sitesPath, name)
       if (fs.existsSync(sitePath)) {
-        console.error(`Site ${name} already exists at ${sitePath}`)
+        console.error(`Site already exists at ${sitePath}`)
         process.exit(1)
       }
       

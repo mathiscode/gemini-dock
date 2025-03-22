@@ -65,6 +65,17 @@ A route key should only be the top-level path, and you should handle subpaths in
 
 See the [dev site source](./packages/sites/localhost) for a full-featured example with authentication, posts, comments, messages, profiles, and more.
 
+A site can be very simple, here is the source for [gemini://gem.mathis.network](gemini://gem.mathis.network):
+
+```js
+const fs = require('fs')
+const body = fs.readFileSync('sites/gem.mathis.network/index.gmi', 'utf8')
+
+module.exports = {
+  '/': async () => ({ code: 20, type: 'text/gemini', body })
+}
+```
+
 Sites can also be installed from npm, like plugins:
 
 ```bash
@@ -78,6 +89,14 @@ gemini-dock site install @gemini-dock/site-dock localhost
 # You may also use the Dock site to setup your own community:
 # gemini-dock site install @gemini-dock/site-dock my-community.com
 npm i drizzle-orm # your server data directory will need this dependency
+```
+
+To customize the Dock site, you may edit the source directly or use environment variables:
+
+```bash
+export DOCK_SITE_NAME="My Community"
+export DOCK_SITE_DESCRIPTION="A community for my users"
+gemini-dock start
 ```
 
 To uninstall a site, run:
