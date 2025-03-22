@@ -2,7 +2,7 @@
 
 An extensible Gemini server written in TypeScript.
 
-> API is not stable yet; expect breaking changes on any upgrade.
+> API is not stable until v1.0.0; expect breaking changes on any upgrade.
 
 *There is an unfortunate problem in the tech world where a lot of projects want to be called Gemini. This project is in the ecosystem of the [Gemini protocol](https://geminiprotocol.net), unrelated to the exchange, Google AI, or any other Gemini product.*
 
@@ -46,6 +46,13 @@ npm install -g @gemini-dock/server # or your package manager's equivalent
 gemini-dock --help
 ```
 
+## Upgrade
+
+```bash
+npm install -g @gemini-dock/server@latest
+# or npx @gemini-dock/server@latest
+```
+
 ---
 
 ## Concepts
@@ -64,12 +71,13 @@ Sites can also be installed from npm, like plugins:
 gemini-dock site install <name> <domain>
 ```
 
-To install the default development community site, run:
+To install [Dock](gemini://dock.mathis.network), the default development community site, run:
 
 ```bash
-gemini-dock site install @gemini-dock/site-localhost localhost
-# You may also use the site to setup your own community:
-# gemini-dock site install @gemini-dock/site-localhost my-community.com
+gemini-dock site install @gemini-dock/site-dock localhost
+# You may also use the Dock site to setup your own community:
+# gemini-dock site install @gemini-dock/site-dock my-community.com
+npm i drizzle-orm # your server data directory will need this dependency
 ```
 
 To uninstall a site, run:

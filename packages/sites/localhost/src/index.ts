@@ -78,15 +78,17 @@ export const routes = {
     }).join('\n\n')
 
     return respond(CODES.SUCCESS, `
-      # 🚀 Gemini Dock
+      # 🚀 ${process.env.DOCK_SITE_NAME || 'Gemini Dock'}
 
-      This is a test site for Gemini Dock.
+      ${process.env.DOCK_SITE_DESCRIPTION || ''}
+
       It is currently ${new Date().toLocaleString()} on the server (${Intl.DateTimeFormat().resolvedOptions().timeZone}).
 
       => /dashboard 🎛️ Dashboard
       => /messages 💬 Messages
       => /posts 📚 Posts
 
+      => https://github.com/mathiscode Made with ❤️ by Jay Mathis
       => gemini://gem.mathis.network
 
       # 📝 Last 10 Posts
