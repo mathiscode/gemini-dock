@@ -1,5 +1,11 @@
 # @gemini-dock/server
 
+## 0.1.2
+
+### Patch Changes
+
+- 8408181: update README; catch bad body; customizable dock
+
 ## 0.1.1
 
 ### Patch Changes
