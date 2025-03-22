@@ -28,8 +28,7 @@
     "gemini-dock": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outdir=dist --out-extension:.js=.cjs --platform=node --external:pino-pretty --packages=external && npm run bin:header",
-    "bin:header": "node ./scripts/bin-header.mjs",
+    "build": "node ./build.js",
     "cert:complete": "pnpm run cert:generate && pnpm run cert:csr && pnpm run cert:sign",
     "cert:csr": "mkdir -p ./.certs/localhost && openssl req -new -key ./.certs/localhost/private.key -out ./.certs/localhost/csr.pem -subj '/CN=localhost/C=US/ST=New York/L=New York/O=Gemini Dock/OU=Development'",
     "cert:generate": "mkdir -p ./.certs/localhost && openssl genrsa -out ./.certs/localhost/private.key 2048",
@@ -40,32 +39,36 @@
     "db:studio": "drizzle-kit studio",
     "dev": "tsx watch --inspect src/index.ts",
     "lint": "eslint src",
-    "postinstall": "npm run build",
-    "start": "node dist/index.cjs"
+    "publish:dev": "npm run build && npm publish --registry=http://localhost:4873",
+    "republish:dev": "npm run unpublish:dev && npm run publish:dev",
+    "start": "node dist/index.cjs",
+    "unpublish:dev": "npm unpublish @gemini-dock/server --registry=http://localhost:4873 --force"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.0",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.1",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@gemini-dock/module-boot": "workspace:*",
+    "@gemini-dock/protocol": "workspace:*",
+    "@gemini-dock/schema": "workspace:*",
+    "@gemini-dock/types": "workspace:*",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.11.10",
+    "drizzle-kit": "^0.30.5",
+    "esbuild": "^0.25.1",
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.26.1"
-  },
-  "dependencies": {
-    "@gemini-dock/module-boot": "workspace:*",
-    "@gemini-dock/protocol": "workspace:*",
-    "@gemini-dock/schema": "workspace:*",
-    "@gemini-dock/types": "workspace:*",
-    "dotenv": "^16.4.7",
-    "drizzle-kit": "^0.30.5",
-    "drizzle-orm": "^0.40.1",
-    "esbuild": "^0.25.1",
-    "pino": "^9.6.0",
-    "pino-pretty": "^13.0.0",
-    "winston": "^3.17.0"
   }
 }

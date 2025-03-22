@@ -49,6 +49,7 @@ export interface PluginListener {
 }
 
 export interface PluginReturnObject {
+  name?: string
   success: boolean
   message?: string
   on: {

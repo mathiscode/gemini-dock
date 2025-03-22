@@ -23,6 +23,7 @@ export const users = sqliteTable('users', {
 
 export const sessions = sqliteTable('sessions', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   userId: int('user_id').references(() => users.id),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`),
   updatedAt: text('updated_at').notNull().default(sql`(current_timestamp)`),
@@ -31,6 +32,7 @@ export const sessions = sqliteTable('sessions', {
 
 export const posts = sqliteTable('posts', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   slug: text('slug').notNull().unique(),
   userId: int('user_id').references(() => users.id),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`),
@@ -42,6 +44,7 @@ export const posts = sqliteTable('posts', {
 
 export const comments = sqliteTable('comments', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   postId: int('post_id').references(() => posts.id),
   userId: int('user_id').references(() => users.id),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`),
@@ -52,6 +55,7 @@ export const comments = sqliteTable('comments', {
 
 export const messages = sqliteTable('messages', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   subject: text('subject').notNull(),
   from: int('from').references(() => users.id),
   to: int('to').references(() => users.id),
@@ -63,6 +67,7 @@ export const messages = sqliteTable('messages', {
 
 export const notifications = sqliteTable('notifications', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   userId: int('user_id').references(() => users.id),
   type: text('type', { enum: NOTIFICATION_TYPES }).notNull(),
   link: text('link'),
@@ -75,6 +80,7 @@ export const notifications = sqliteTable('notifications', {
 
 export const likes = sqliteTable('likes', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   reaction: text('reaction', { enum: REACTIONS }).notNull(),
   userId: int('user_id').references(() => users.id),
   postId: int('post_id').references(() => posts.id),
@@ -84,6 +90,7 @@ export const likes = sqliteTable('likes', {
 
 export const data = sqliteTable('data', {
   id: int('id').primaryKey(),
+  site: text('site').notNull(),
   name: text('name').notNull(),
   value: text('value').notNull(),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`),
@@ -96,7 +103,8 @@ export const data = sqliteTable('data', {
 export const userRelations = relations(users, ({ many }) => ({
   posts: many(posts),
   comments: many(comments),
-  messages: many(messages),
+  sentMessages: many(messages, { relationName: 'sender' }),
+  receivedMessages: many(messages, { relationName: 'receiver' }),
   notifications: many(notifications),
   likes: many(likes)
 }))
@@ -112,10 +120,15 @@ export const commentRelations = relations(comments, ({ one }) => ({
 }))
 
 export const messageRelations = relations(messages, ({ one }) => ({
-  from: one(users, { fields: [messages.from], references: [users.id] }),
-  to: one(users, { fields: [messages.to], references: [users.id] })
+  from: one(users, { fields: [messages.from], references: [users.id], relationName: 'sender' }),
+  to: one(users, { fields: [messages.to], references: [users.id], relationName: 'receiver' })
 }))
 
 export const notificationRelations = relations(notifications, ({ one }) => ({
   user: one(users, { fields: [notifications.userId], references: [users.id] })
+}))
+
+export const likeRelations = relations(likes, ({ one }) => ({
+  user: one(users, { fields: [likes.userId], references: [users.id] }),
+  post: one(posts, { fields: [likes.postId], references: [posts.id] })
 }))

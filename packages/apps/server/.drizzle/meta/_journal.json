@@ -8,6 +8,13 @@
       "when": 1742514438727,
       "tag": "0000_noisy_meltdown",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1742603572969,
+      "tag": "0001_daily_prowler",
+      "breakpoints": true
     }
   ]
 }

@@ -17,21 +17,24 @@ importers:
 
   packages/apps/server:
     dependencies:
-      '@gemini-dock/module-boot':
-        specifier: workspace:*
-        version: link:../../modules/boot
-      '@gemini-dock/server':
-        specifier: link:/home/archmag0s/code/gemini-dock.ts/packages/apps/server
-        version: 'link:'
-      '@libsql/linux-x64-musl':
-        specifier: ^0.5.1
-        version: 0.5.1
+      '@libsql/client':
+        specifier: ^0.15.0
+        version: 0.15.0
+      commander:
+        specifier: ^13.1.0
+        version: 13.1.0
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       drizzle-orm:
         specifier: ^0.40.1
         version: 0.40.1(@libsql/client@0.15.0)(gel@2.0.1)
       pino:
         specifier: ^9.6.0
         version: 9.6.0
+      pino-pretty:
+        specifier: ^13.0.0
+        version: 13.0.0
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -39,6 +42,9 @@ importers:
       '@eslint/js':
         specifier: ^9.22.0
         version: 9.22.0
+      '@gemini-dock/module-boot':
+        specifier: workspace:*
+        version: link:../../modules/boot
       '@gemini-dock/protocol':
         specifier: workspace:*
         version: link:../../lib/protocol
@@ -57,9 +63,6 @@ importers:
       '@types/node':
         specifier: ^22.11.10
         version: 22.13.10
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
       drizzle-kit:
         specifier: ^0.30.5
         version: 0.30.5
@@ -75,9 +78,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.10)(ts-node@10.9.2(@types/node@22.13.10)(typescript@5.8.2))
-      pino-pretty:
-        specifier: ^13.0.0
-        version: 13.0.0
       ts-jest:
         specifier: ^29.1.2
         version: 29.2.6(@babel/core@7.26.10)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.10))(esbuild@0.25.1)(jest@29.7.0(@types/node@22.13.10)(ts-node@10.9.2(@types/node@22.13.10)(typescript@5.8.2)))(typescript@5.8.2)
@@ -1387,6 +1387,10 @@ packages:
 
   colorspace@1.1.4:
     resolution: {integrity: sha512-BgvKJiuVu1igBUF2kEjRCZXol6wiiGbY5ipL/oVPwm0BL9sIpMIzM8IK7vwuxIIzOXMV3Ey5w+vxhm0rR/TN8w==}
+
+  commander@13.1.0:
+    resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
+    engines: {node: '>=18'}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -3657,12 +3661,10 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    optional: true
 
   '@libsql/core@0.15.0':
     dependencies:
       js-base64: 3.7.7
-    optional: true
 
   '@libsql/darwin-arm64@0.5.1':
     optional: true
@@ -3679,10 +3681,8 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    optional: true
 
-  '@libsql/isomorphic-fetch@0.3.1':
-    optional: true
+  '@libsql/isomorphic-fetch@0.3.1': {}
 
   '@libsql/isomorphic-ws@0.1.5':
     dependencies:
@@ -3691,7 +3691,6 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    optional: true
 
   '@libsql/linux-arm64-gnu@0.5.1':
     optional: true
@@ -3702,7 +3701,8 @@ snapshots:
   '@libsql/linux-x64-gnu@0.5.1':
     optional: true
 
-  '@libsql/linux-x64-musl@0.5.1': {}
+  '@libsql/linux-x64-musl@0.5.1':
+    optional: true
 
   '@libsql/win32-x64-msvc@0.5.1':
     optional: true
@@ -3723,8 +3723,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@neon-rs/load@0.0.4':
-    optional: true
+  '@neon-rs/load@0.0.4': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3819,7 +3818,6 @@ snapshots:
   '@types/ws@8.18.0':
     dependencies:
       '@types/node': 22.13.10
-    optional: true
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -4107,6 +4105,8 @@ snapshots:
       color: 3.2.1
       text-hex: 1.0.0
 
+  commander@13.1.0: {}
+
   concat-map@0.0.1: {}
 
   convert-source-map@2.0.0: {}
@@ -4134,8 +4134,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  data-uri-to-buffer@4.0.1:
-    optional: true
+  data-uri-to-buffer@4.0.1: {}
 
   dateformat@4.6.3: {}
 
@@ -4151,8 +4150,7 @@ snapshots:
 
   detect-indent@6.1.0: {}
 
-  detect-libc@2.0.2:
-    optional: true
+  detect-libc@2.0.2: {}
 
   detect-newline@3.1.0: {}
 
@@ -4433,7 +4431,6 @@ snapshots:
     dependencies:
       node-domexception: 1.0.0
       web-streams-polyfill: 3.3.3
-    optional: true
 
   file-entry-cache@8.0.0:
     dependencies:
@@ -4469,7 +4466,6 @@ snapshots:
   formdata-polyfill@4.0.10:
     dependencies:
       fetch-blob: 3.2.0
-    optional: true
 
   fs-extra@7.0.1:
     dependencies:
@@ -4979,8 +4975,7 @@ snapshots:
 
   joycon@3.1.1: {}
 
-  js-base64@3.7.7:
-    optional: true
+  js-base64@3.7.7: {}
 
   js-tokens@4.0.0: {}
 
@@ -5036,7 +5031,6 @@ snapshots:
       '@libsql/linux-x64-gnu': 0.5.1
       '@libsql/linux-x64-musl': 0.5.1
       '@libsql/win32-x64-msvc': 0.5.1
-    optional: true
 
   lines-and-columns@1.2.4: {}
 
@@ -5108,15 +5102,13 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  node-domexception@1.0.0:
-    optional: true
+  node-domexception@1.0.0: {}
 
   node-fetch@3.3.2:
     dependencies:
       data-uri-to-buffer: 4.0.1
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
-    optional: true
 
   node-int64@0.4.0: {}
 
@@ -5264,8 +5256,7 @@ snapshots:
 
   process-warning@4.0.1: {}
 
-  promise-limit@2.7.0:
-    optional: true
+  promise-limit@2.7.0: {}
 
   prompts@2.4.2:
     dependencies:
@@ -5575,8 +5566,7 @@ snapshots:
     dependencies:
       makeerror: 1.0.12
 
-  web-streams-polyfill@3.3.3:
-    optional: true
+  web-streams-polyfill@3.3.3: {}
 
   which@2.0.2:
     dependencies:
@@ -5621,8 +5611,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-  ws@8.18.1:
-    optional: true
+  ws@8.18.1: {}
 
   y18n@5.0.8: {}
 
