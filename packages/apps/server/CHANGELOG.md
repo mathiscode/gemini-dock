@@ -1,5 +1,11 @@
 # @gemini-dock/server
 
+## 0.1.4
+
+### Patch Changes
+
+- hotfix response body crash
+
 ## 0.1.3
 
 ### Patch Changes

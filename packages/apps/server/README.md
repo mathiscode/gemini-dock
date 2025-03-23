@@ -1,6 +1,8 @@
 # Gemini Dock
 
-An extensible Gemini server written in TypeScript.
+**An extensible Gemini server written in TypeScript**
+
+See [gemini://dock.mathis.network](gemini://dock.mathis.network) for a demo of [@gemini-dock/site-dock](https://npmjs.com/package/@gemini-dock/site-dock) served by Gemini Dock.
 
 > API is not stable until v1.0.0; expect breaking changes on any upgrade.
 
@@ -11,7 +13,6 @@ An extensible Gemini server written in TypeScript.
 [Excerpt from geminiprotocol.net](https://geminiprotocol.net):
 
 > Gemini is a group of technologies similar to the ones that lie behind your familiar web browser. Using Gemini, you can explore an online collection of written documents which can link to other written documents. The main difference is that Gemini approaches this task with a strong philosophy of "keep it simple" and "less is enough". This allows Gemini to simply sidestep, rather than try and probably fail to solve, many of the problems plaguing the modern web, which just seem to get worse and worse no matter how many browser add-ons or well meaning regulations get thrown at them.
-
 
 - [Protocol Specification](https://geminiprotocol.net/docs/protocol-specification.gmi)
 - [Gemtext Specification](https://geminiprotocol.net/docs/gemtext-specification.gmi)
@@ -37,7 +38,7 @@ npx @gemini-dock/server migrate
 npx @gemini-dock/server start
 ```
 
-Then visit [gemini://localhost](gemini://localhost) to see the server in action.
+Then visit [`gemini://localhost`](gemini://localhost) to see the server in action.
 
 ## Installation
 
@@ -51,6 +52,7 @@ gemini-dock --help
 ```bash
 npm install -g @gemini-dock/server@latest
 # or npx @gemini-dock/server@latest
+gemini-dock migrate
 ```
 
 ---
@@ -63,9 +65,9 @@ A site can be constructed in almost any way you want, as long as it exports a de
 
 A route key should only be the top-level path, and you should handle subpaths in the route handler with the `options.url` object.
 
-See the [dev site source](./packages/sites/localhost) for a full-featured example with authentication, posts, comments, messages, profiles, and more.
+See the [Dock site source](./packages/sites/localhost) for a full-featured example with authentication, posts, comments, messages, profiles, and more.
 
-A site can be very simple, here is the source for [gemini://gem.mathis.network](gemini://gem.mathis.network):
+A site can be very simple, here is the source for [`gemini://gem.mathis.network`](gemini://gem.mathis.network):
 
 ```js
 const fs = require('fs')
@@ -82,12 +84,10 @@ Sites can also be installed from npm, like plugins:
 gemini-dock site install <name> <domain>
 ```
 
-To install [Dock](gemini://dock.mathis.network), the default development community site, run:
+To install [Dock](https://npmjs.com/package/@gemini-dock/site-dock) (`gemini://dock.mathis.network`), the default development community site, run:
 
 ```bash
 gemini-dock site install @gemini-dock/site-dock localhost
-# You may also use the Dock site to setup your own community:
-# gemini-dock site install @gemini-dock/site-dock my-community.com
 npm i drizzle-orm # your server data directory will need this dependency
 ```
 
@@ -137,7 +137,7 @@ export default {
 
 ### Database
 
-There is a SQLite database that is used to store data for sites. The schema is handled by the server, and sites can store arbitrary data in the metadata columns or in the `data` table.
+There is a SQLite database that is used to store data for sites. The schema is handled by the server, and sites can store arbitrary data in the `metadata` columns or in the `data` table.
 
 Sites are expected to use the `site` column of each table to differentiate data between sites. There is no private data between sites, unless implemented by the site itself.
 
@@ -156,11 +156,11 @@ The current database schema can be found in the [packages/lib/schema/src/schema.
 
 ### Modules
 
-Modules are a way to extend the functionality of Gemini Dock at buildtime. Examples can be found in the `packages/modules` directory.
+Modules are a way to extend the functionality of Gemini Dock at buildtime. Examples can be found in the [packages/modules](./packages/modules) directory.
 
 ### Plugins
 
-Plugins are a way to extend the functionality of Gemini Dock at runtime, and is simply a default export of a function that returns an object with listeners (see below). Examples can be found in the `packages/plugins` directory.
+Plugins are a way to extend the functionality of Gemini Dock at runtime, and is simply a default export of a function that returns an object with listeners (see below). Examples can be found in the [packages/plugins](./packages/plugins) directory.
 
 To install a plugin, run:
 
