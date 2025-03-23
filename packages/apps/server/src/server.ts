@@ -267,7 +267,13 @@ export default (options: {
         try {
           requestData = Buffer.alloc(0)
           logger.info(`${socket.remoteAddress}:${socket.remotePort} - ${modifiedResponse.code} Content-Length: ${modifiedResponse.code !== 20 ? modifiedResponse.type : modifiedResponse.body.length}`)
-          socket.write(Buffer.from(`${modifiedResponse.code} ${modifiedResponse.type}\r\n${modifiedResponse.body?.split?.('\n').map(line => line.trim()).join('\r\n')}\r\n`))
+          if (Buffer.isBuffer(modifiedResponse.body)) {
+            socket.write(Buffer.from(`${modifiedResponse.code} ${modifiedResponse.type}\r\n`))
+            socket.write(modifiedResponse.body)
+            socket.write(Buffer.from('\r\n'))
+          } else {
+            socket.write(Buffer.from(`${modifiedResponse.code} ${modifiedResponse.type}\r\n${modifiedResponse.body?.split?.('\n').map(line => line.trim()).join('\r\n')}\r\n`))
+          }
         } catch (error) {
           logger.error('Error in response', error)
         } finally {

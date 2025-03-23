@@ -117,9 +117,16 @@ export default {
 
   '/login': options => {
     const { certificate, db, input, url } = options
+    // On non-success codes, "type" is our response content
     if (!certificate?.subject) return { code: 60, type: 'Certificate required for this route' }
     return { code: 20, type: 'text/gemini', body: 'Welcome back!' }
   },
+
+  '/image': options => {
+    const fs = require('fs')
+    const image = fs.readFileSync('./image.png')
+    return { code: 20, type: 'image/png', body: image }
+  }
 }
 ```
 
@@ -130,7 +137,7 @@ import { CODES, respond } from '@gemini-dock/protocol'
 import type { SiteOptions } from '@gemini-dock/types'
 
 export default {
-  '/': (options: SiteOptions) => respond(CODES.SUCCESS, 'text/gemini', 'Hello, world!'),
+  '/': (options: SiteOptions) => respond(CODES.SUCCESS, 'Hello, world!'),
   '/bad': (options: SiteOptions) => respond(CODES.FAIL_NOT_FOUND, 'Route not found'),
 }
 ```
