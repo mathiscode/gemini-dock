@@ -137,7 +137,7 @@ export default {
 
 ### Database
 
-There is a SQLite database that is used to store data for sites. The schema is handled by the server, and sites can store arbitrary data in the metadata columns or in the `data` table.
+There is a SQLite database that is used to store data for sites. The schema is handled by the server, and sites can store arbitrary data in the `metadata` columns or in the `data` table.
 
 Sites are expected to use the `site` column of each table to differentiate data between sites. There is no private data between sites, unless implemented by the site itself.
 
@@ -156,11 +156,11 @@ The current database schema can be found in the [packages/lib/schema/src/schema.
 
 ### Modules
 
-Modules are a way to extend the functionality of Gemini Dock at buildtime. Examples can be found in the `packages/modules` directory.
+Modules are a way to extend the functionality of Gemini Dock at buildtime. Examples can be found in the [packages/modules](./packages/modules) directory.
 
 ### Plugins
 
-Plugins are a way to extend the functionality of Gemini Dock at runtime, and is simply a default export of a function that returns an object with listeners (see below). Examples can be found in the `packages/plugins` directory.
+Plugins are a way to extend the functionality of Gemini Dock at runtime, and is simply a default export of a function that returns an object with listeners (see below). Examples can be found in the [packages/plugins](./packages/plugins) directory.
 
 To install a plugin, run:
 

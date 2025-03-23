@@ -527,7 +527,7 @@ export function startServer(options: {
 
   if (!SERVER) {
     logger.error('Failed to create server. Check certificate errors above.')
-    logger.error('If you need to generate certificates, use: gemini-dock certificate generate localhost')
+    logger.error('If you need to generate certificates, use: gemini-dock certificate generate <domain>')
     process.exit(1)
   }
 
