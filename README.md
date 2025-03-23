@@ -38,7 +38,7 @@ npx @gemini-dock/server migrate
 npx @gemini-dock/server start
 ```
 
-Then visit [gemini://localhost](gemini://localhost) to see the server in action.
+Then visit [`gemini://localhost`](gemini://localhost) to see the server in action.
 
 ## Installation
 
@@ -67,7 +67,7 @@ A route key should only be the top-level path, and you should handle subpaths in
 
 See the [Dock site source](./packages/sites/localhost) for a full-featured example with authentication, posts, comments, messages, profiles, and more.
 
-A site can be very simple, here is the source for [gemini://gem.mathis.network](gemini://gem.mathis.network):
+A site can be very simple, here is the source for [`gemini://gem.mathis.network`](gemini://gem.mathis.network):
 
 ```js
 const fs = require('fs')
@@ -84,7 +84,7 @@ Sites can also be installed from npm, like plugins:
 gemini-dock site install <name> <domain>
 ```
 
-To install [Dock](gemini://dock.mathis.network), the default development community site, run:
+To install [Dock](https://npmjs.com/package/@gemini-dock/site-dock) (`gemini://dock.mathis.network`), the default development community site, run:
 
 ```bash
 gemini-dock site install @gemini-dock/site-dock localhost
