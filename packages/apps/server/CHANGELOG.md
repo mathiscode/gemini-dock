@@ -1,5 +1,11 @@
 # @gemini-dock/server
 
+## 0.1.6
+
+### Patch Changes
+
+- schema updates; misc tweaks
+
 ## 0.1.5
 
 ### Patch Changes

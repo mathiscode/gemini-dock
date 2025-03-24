@@ -1,5 +1,14 @@
 # @gemini-dock/site-localhost
 
+## 0.1.3
+
+### Patch Changes
+
+- schema updates; misc tweaks
+- Updated dependencies
+  - @gemini-dock/schema@0.1.2
+  - @gemini-dock/types@0.1.1
+
 ## 0.1.2
 
 ### Patch Changes
