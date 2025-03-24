@@ -1,5 +1,11 @@
 # @gemini-dock/server
 
+## 0.1.7
+
+### Patch Changes
+
+- fix server response
+
 ## 0.1.6
 
 ### Patch Changes
