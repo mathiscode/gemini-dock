@@ -23,12 +23,8 @@ export const routes = {
   // ROOT
   '/': async (options: SiteOptions) => {
     const { db, url } = options
-    const last10Posts = await db.query.posts.findMany({ 
-      orderBy: [desc(posts.createdAt)], 
-      limit: 10, 
-      with: { user: true } 
-    })
-    
+
+    const last10Posts = await db.query.posts.findMany({ orderBy: [desc(posts.createdAt)], limit: 10, with: { user: true } })
     const last10Users = await db.query.users.findMany({ orderBy: [desc(users.createdAt)], limit: 10 })
     const last10Comments = await db.query.comments.findMany({ orderBy: [desc(comments.createdAt)], limit: 10, with: { user: true, post: { with: { user: true } } } })
 
@@ -149,6 +145,8 @@ export const routes = {
           You can now login.
 
           Your certificate and password are CRUCIAL - do not lose them!
+
+          Your certificate fingerprint is ${certificate.fingerprint256}
 
           => /login Login
         `)

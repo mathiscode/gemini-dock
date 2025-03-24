@@ -7,8 +7,8 @@ const ROLES = ['admin', 'user'] as const
 
 export const users = sqliteTable('users', {
   id: int('id').primaryKey(),
-  site: text('site').notNull().unique(),
-  name: text('name').notNull().unique(),
+  site: text('site').notNull(),
+  name: text('name').notNull(),
   email: text('email'),
   password: text('password'),
   passcheck: text('passcheck'),

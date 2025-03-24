@@ -540,7 +540,7 @@ export function startServer(options: {
   })
 
   SERVER.listen(PORT, HOST, BACKLOG, () => {
-    logger.info(`${SERVER_NAME} listening on ${HOST}:${PORT}`)
+    logger.info(`${SERVER_NAME} ${process.env.VERSION || '?.?.?'} listening on ${HOST}:${PORT}`)
     // @ts-expect-error - TODO: fix this
     for (const mod of STARTUP_MODULES) mod.default({ logger: logger.child({ module: mod.name }) })
   })
