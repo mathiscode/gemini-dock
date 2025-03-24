@@ -1,5 +1,11 @@
 # @gemini-dock/server
 
+## 0.1.9
+
+### Patch Changes
+
+- fix migration
+
 ## 0.1.8
 
 ### Patch Changes
