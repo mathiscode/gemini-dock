@@ -276,8 +276,8 @@ export default (options: {
           }
         } catch (error) {
           logger.error('Error in response', error)
-        } finally {
           socket.write(Buffer.from('42 Site error\r\n'))
+        } finally {
           socket.end()
         }
       }
