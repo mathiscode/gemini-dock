@@ -39,11 +39,12 @@ program
   .description('Output migration files')
   .action(() => {
     try {
+      const geminiDockPath = execSync(`dirname $(which gemini-dock)`).toString().trim()
       execSync(`mkdir -p ${path.join(process.cwd(), '.migration')}`)
-      execSync(`cp -r ${path.join(__dirname, '.drizzle')} ${path.join(process.cwd(), '.migration', '.drizzle')}`)
-      execSync(`cp ${path.join(__dirname, 'schema.js')} ${path.join(process.cwd(), '.migration', 'schema.js')}`)
-      execSync(`cp ${path.join(__dirname, 'drizzle.config.js')} ${path.join(process.cwd(), '.migration', 'drizzle.config.js')}`)
-      execSync(`cp ${path.join(__dirname, 'migrate.package.json')} ${path.join(process.cwd(), '.migration', 'package.json')}`)
+      execSync(`cp -r ${geminiDockPath}/../lib/node_modules/@gemini-dock/server/.drizzle ${path.join(process.cwd(), '.migration', '.drizzle')}`)
+      execSync(`cp ${geminiDockPath}/../lib/node_modules/@gemini-dock/server/dist/schema.js ${path.join(process.cwd(), '.migration', 'schema.js')}`)
+      execSync(`cp ${geminiDockPath}/../lib/node_modules/@gemini-dock/server/dist/drizzle.config.js ${path.join(process.cwd(), '.migration', 'drizzle.config.js')}`)
+      execSync(`cp ${geminiDockPath}/../lib/node_modules/@gemini-dock/server/dist/migrate.package.json ${path.join(process.cwd(), '.migration', 'package.json')}`)
       console.log('Installing migration dependencies...')
       execSync(`cd ${path.join(process.cwd(), '.migration')} && npm install && npm run migrate ; cd ..`)
       console.log('Migration files updated!')
