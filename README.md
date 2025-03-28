@@ -150,7 +150,7 @@ Sites are expected to use the `site` column of each table to differentiate data 
 
 Sites can of course use their own database solution for more advanced use cases.
 
-The current database schema can be found in the [packages/lib/schema/src/schema.ts](packages/lib/schema/src/schema.ts) file.
+The current database schema can be found in the [packages/lib/schema/src/index.ts](packages/lib/schema/src/index.ts) file.
 
 - `users` - A table for storing user accounts
 - `sessions` - A table for storing sessions
