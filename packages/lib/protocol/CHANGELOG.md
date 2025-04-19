@@ -1,5 +1,12 @@
 # @gemini-dock/protocol
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [f42ef84]
+  - @gemini-dock/types@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @gemini-dock/types
 
+## 0.1.2
+
+### Patch Changes
+
+- f42ef84: add geminAI; tweaks to schema and server
+
 ## 0.1.1
 
 ### Patch Changes
