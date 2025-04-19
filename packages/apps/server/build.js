@@ -3,22 +3,32 @@
 import fs from 'fs'
 import { build } from 'esbuild'
 import { execSync } from 'child_process'
+import pluginPino from 'esbuild-plugin-pino'
+import path from 'path'
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
 build({
   entryPoints: ['src/index.ts'],
-  outfile: 'dist/index.cjs',
+  outdir: 'dist',
   bundle: true,
   sourcemap: true,
   target: 'node20',
   platform: 'node',
   banner: { js: '#!/usr/bin/env node\n' },
   define: {
-    'process.env.VERSION': JSON.stringify(pkg.version) // TODO: this didn't get updated in the previous build; check it
-  }
+    'process.env.VERSION': JSON.stringify(pkg.version)
+  },
+  plugins: [pluginPino({ transports: ['pino-pretty'] })]
 })
 .then(() => {
+  try { fs.mkdirSync('dist/lib') } catch {}
+  fs.copyFileSync('dist/thread-stream-worker.js', 'dist/lib/worker.js')
+  fs.copyFileSync('dist/thread-stream-worker.js.map', 'dist/lib/worker.js.map')
+  fs.copyFileSync('dist/pino-pretty.js', 'dist/lib/pino-pretty-transport.js')
+  fs.copyFileSync('dist/pino-pretty.js.map', 'dist/lib/pino-pretty-transport.js.map')
+
+  fs.renameSync('dist/index.js', 'dist/index.cjs')
   execSync('chmod +x dist/index.cjs')
   execSync('cp -r .drizzle dist/')
   fs.copyFileSync('../../lib/schema/dist/index.js', 'dist/schema.js')

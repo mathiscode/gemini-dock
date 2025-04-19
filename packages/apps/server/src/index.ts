@@ -48,6 +48,7 @@ program
       console.log('Installing migration dependencies...')
       execSync(`cd ${path.join(process.cwd(), '.migration')} && npm install && npm run migrate ; cd ..`)
       console.log('Migration files updated!')
+      process.exit(0)
     } catch (error) {
       console.error(`Error copying migration files: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -72,6 +73,7 @@ certificateCommand
     console.log('  --certs-path <path>     Path to certificates directory')
     console.log('')
     console.log('Run `gemini-dock certificate <command> --help` for more information on a command.')
+    process.exit(0)
   })
 
 certificateCommand
@@ -92,6 +94,7 @@ certificateCommand
       certs.forEach(cert => {
         console.log(`- ${cert}`)
       })
+      process.exit(0)
     } catch (error) {
       console.error(`Error listing certificates: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -170,6 +173,7 @@ certificateCommand
       })
 
       console.log(`Certificate for ${domain} generated successfully at ${domainCertPath}`)
+      process.exit(0)
     } catch (error) {
       console.error(`Error generating certificate: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -194,6 +198,7 @@ const pluginsCommand = program
     console.log('  --plugins-path <path>   Path to plugins directory')
     console.log('')
     console.log('Run `gemini-dock plugin <command> --help` for more information on a command.')
+    process.exit(0)
   })
 
 pluginsCommand
@@ -228,6 +233,7 @@ pluginsCommand
           console.log(`- ${pluginPath} (Error reading plugin info)`)
         }
       })
+      process.exit(0)
     } catch (error) {
       console.error(`Error listing plugins: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -244,11 +250,18 @@ pluginsCommand
       fs.mkdirSync(path.join(process.cwd(), pluginsPath), { recursive: true })
     }
 
-    const tmpPath = path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}')
-    execSync(`npm install ${name} -g --prefix ${tmpPath}`)
-    execSync(`cp -r ${tmpPath}/lib/node_modules/${name} ${path.join(process.cwd(), pluginsPath, name)}`)
-    execSync(`rm -rf ${tmpPath}`)
-    execSync(`cd ${path.join(process.cwd(), pluginsPath, name)} && npm install ; cd..`)
+    try {
+      const tmpPath = path.join(os.tmpdir(), `gemini-dock-npm-install-${name}`)
+      execSync(`npm install ${name} -g --prefix ${tmpPath}`)
+      execSync(`cp -r ${tmpPath}/lib/node_modules/${name} ${path.join(process.cwd(), pluginsPath, name)}`)
+      execSync(`rm -rf ${tmpPath}`)
+      execSync(`cd ${path.join(process.cwd(), pluginsPath, name)} && npm install ; cd..`)
+      console.log(`Plugin ${name} installed successfully.`)
+      process.exit(0)
+    } catch (error) {
+      console.error(`Error installing plugin: ${error instanceof Error ? error.message : String(error)}`)
+      process.exit(1)
+    }
   })
 
 pluginsCommand
@@ -257,7 +270,14 @@ pluginsCommand
   .action((name, options) => {
     console.log(`Uninstalling plugin ${name}...`)
     const pluginsPath = options.pluginsPath || pluginsCommand.opts().pluginsPath
-    execSync(`rm -rf ${path.join(process.cwd(), pluginsPath, name)}`)
+    try {
+      execSync(`rm -rf ${path.join(process.cwd(), pluginsPath, name)}`)
+      console.log(`Plugin ${name} uninstalled successfully.`)
+      process.exit(0)
+    } catch (error) {
+      console.error(`Error uninstalling plugin: ${error instanceof Error ? error.message : String(error)}`)
+      process.exit(1)
+    }
   })
 
 pluginsCommand
@@ -315,6 +335,7 @@ module.exports = (options) => {
 
       fs.writeFileSync(path.join(pluginPath, 'index.js'), indexContent)
       console.log(`Generated plugin ${name} at ${pluginPath}`)
+      process.exit(0)
     } catch (error) {
       console.error(`Error generating plugin: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -341,6 +362,7 @@ sitesCommand
     console.log('  --sites-path <path>     Path to sites directory')
     console.log('')
     console.log('Run `gemini-dock sites <command> --help` for more information on a command.')
+    process.exit(0)
   })
 
 sitesCommand
@@ -363,6 +385,7 @@ sitesCommand
       }
       
       sites.forEach(site => { console.log(`- ${site}`) })
+      process.exit(0)
     } catch (error) {
       console.error(`Error listing sites: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -401,6 +424,7 @@ module.exports = {
 `
       fs.writeFileSync(path.join(sitePath, 'index.js'), indexContent)
       console.log(`Generated boilerplate site ${name} at ${sitePath}`)
+      process.exit(0)
     } catch (error) {
       console.error(`Error generating site: ${error instanceof Error ? error.message : String(error)}`)
       process.exit(1)
@@ -423,10 +447,17 @@ sitesCommand
       process.exit(1)
     }
 
-    const tmpPath = path.join(os.tmpdir(), 'gemini-dock-npm-install-${name}')
-    execSync(`npm install ${name} -g --prefix ${tmpPath}`)
-    execSync(`cp -r ${tmpPath}/lib/node_modules/${name} ${sitePath}`)
-    execSync(`rm -rf ${tmpPath}`)
+    try {
+      const tmpPath = path.join(os.tmpdir(), `gemini-dock-npm-install-${name}`)
+      execSync(`npm install ${name} -g --prefix ${tmpPath}`)
+      execSync(`cp -r ${tmpPath}/lib/node_modules/${name} ${sitePath}`)
+      execSync(`rm -rf ${tmpPath}`)
+      console.log(`Site ${name} installed successfully at ${sitePath}.`)
+      process.exit(0)
+    } catch (error) {
+      console.error(`Error installing site: ${error instanceof Error ? error.message : String(error)}`)
+      process.exit(1)
+    }
   })
 
 sitesCommand
@@ -435,7 +466,14 @@ sitesCommand
   .action((name, options) => {
     console.log(`Uninstalling site ${name}...`)
     const sitesPath = options.sitesPath || sitesCommand.opts().sitesPath
-    execSync(`rm -rf ${path.join(process.cwd(), sitesPath, name)}`)
+    try {
+      execSync(`rm -rf ${path.join(process.cwd(), sitesPath, name)}`)
+      console.log(`Site ${name} uninstalled successfully.`)
+      process.exit(0)
+    } catch (error) {
+      console.error(`Error uninstalling site: ${error instanceof Error ? error.message : String(error)}`)
+      process.exit(1)
+    }
   })
 
 program.parse()

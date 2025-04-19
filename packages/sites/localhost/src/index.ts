@@ -1,11 +1,14 @@
-// TODO: pagination
+
 
 import bcrypt from 'bcryptjs'
-import { and, desc, eq } from 'drizzle-orm'
+// import { and, desc, eq } from 'drizzle-orm'
+import { drizzle } from '@gemini-dock/schema'
 
 import { CODES, respond } from '@gemini-dock/protocol'
 import { comments, likes, messages, notifications, posts, sessions, users } from '@gemini-dock/schema'
 import type { SiteOptions } from '@gemini-dock/types'
+
+const { and, desc, eq } = drizzle
 
 const NOTIFICATION_DESCRIPTIONS = {
   comment: 'New Comment',

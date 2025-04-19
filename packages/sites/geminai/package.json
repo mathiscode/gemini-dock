@@ -1,0 +1,39 @@
+{
+  "name": "@gemini-dock/site-geminai",
+  "version": "0.1.0",
+  "description": "Chat with Gemini on Gemini",
+  "license": "MIT",
+  "author": {
+    "name": "Jay Mathis",
+    "email": "code@mathis.network",
+    "url": "https://jaymath.is"
+  },
+  "keywords": [
+    "gemini",
+    "protocol",
+    "gopher",
+    "internet",
+    "llm",
+    "chat",
+    "ai"
+  ],
+  "type": "module",
+  "packageManager": "pnpm@10.4.1",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@gemini-dock/protocol": "workspace:*",
+    "@gemini-dock/schema": "workspace:*",
+    "@gemini-dock/types": "workspace:*",
+    "openai": "^4.95.0"
+  },
+  "devDependencies": {
+    "drizzle-orm": "^0.40.1",
+    "typescript": "^5.8.2"
+  }
+}

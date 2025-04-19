@@ -95,6 +95,7 @@ export default (options: {
   const server = tls.createServer(tlsOptions, (socket) => {
     // @ts-expect-error
     const servername = socket.servername || 'unknown'
+    const clientAddress = socket.remoteAddress
     let requestData = Buffer.alloc(0)
     
     socket.on('data', async (data) => {
@@ -219,6 +220,7 @@ export default (options: {
             url,
             certificate,
             servername,
+            clientAddress,
             input: Array.from(url.searchParams.entries())?.[0]?.[0],
             logger: logger.child({ site: servername }),
           } as SiteOptions)

@@ -1,6 +1,8 @@
 import { relations, sql } from 'drizzle-orm'
 import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
+export * as drizzle from 'drizzle-orm'
+
 const NOTIFICATION_TYPES = ['comment', 'message', 'like', 'follow', 'mention', 'post', 'post-comment', 'post-like', 'post-mention'] as const
 const REACTIONS = ['👍', '❤️', '😂', '😢', '😡', '😮', '😭'] as const
 const ROLES = ['admin', 'user'] as const

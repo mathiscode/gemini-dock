@@ -5,6 +5,7 @@ import type { PeerCertificate } from 'tls'
 
 export interface SiteOptions {
   servername: string
+  clientAddress: string
   db: LibSQLDatabase<typeof schema>
   url: URL
   certificate: PeerCertificate
