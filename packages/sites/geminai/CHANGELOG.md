@@ -1,5 +1,11 @@
 # @gemini-dock/site-geminai
 
+## 0.1.2
+
+### Patch Changes
+
+- unlazy: use env for openrouter key
+
 ## 0.1.1
 
 ### Patch Changes
