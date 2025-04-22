@@ -7,10 +7,10 @@ import { SiteOptions } from '@gemini-dock/types'
 
 const { and, eq, lt, sql } = drizzle
 
-const PUBLIC_BASE_URL = 'https://openrouter.ai/api/v1'
-const PUBLIC_KEY = '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'
-const DEFAULT_MODEL_ID = 'mistralai/mistral-small-3.1-24b-instruct:free'
-const CLEANUP_INTERVAL = '-7 days'
+const PUBLIC_KEY = process.env.OPENROUTER_API_KEY
+const PUBLIC_BASE_URL = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1'
+const DEFAULT_MODEL_ID = process.env.OPENROUTER_MODEL_ID || 'mistralai/mistral-small-3.1-24b-instruct:free'
+const CLEANUP_INTERVAL = process.env.GEMINAI_CLEANUP_INTERVAL || '-7 days'
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
 const MAX_REQUESTS_PER_WINDOW = 10
 
