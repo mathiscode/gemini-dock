@@ -1,5 +1,11 @@
 # @gemini-dock/site-geminai
 
+## 0.1.3
+
+### Patch Changes
+
+- fix geminai client init
+
 ## 0.1.2
 
 ### Patch Changes
