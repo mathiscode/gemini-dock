@@ -41,8 +41,8 @@ const systemPrompt = `
 `
 
 const openai = new OpenAI({
-  baseURL: process.env.OPENAI_BASE_URL || PUBLIC_BASE_URL,
-  apiKey: process.env.OPENAI_API_KEY || PUBLIC_KEY
+  baseURL: PUBLIC_BASE_URL,
+  apiKey: PUBLIC_KEY
 })
 
 const cleanupOldSessions = async (db: SiteOptions['db']) => {
