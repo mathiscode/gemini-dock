@@ -31,6 +31,7 @@ See [gemini://dock.mathis.network](gemini://dock.mathis.network) for a demo of [
 ## Quick Start
 
 ```bash
+mkdir -p /path/to/server/data
 cd /path/to/server/data
 npx @gemini-dock/server certificate generate localhost
 npx @gemini-dock/server site generate localhost
