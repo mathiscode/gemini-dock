@@ -9,7 +9,7 @@ const { and, eq, lt, sql } = drizzle
 
 const PUBLIC_KEY = process.env.OPENROUTER_API_KEY
 const PUBLIC_BASE_URL = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1'
-const DEFAULT_MODEL_ID = process.env.OPENROUTER_MODEL_ID || 'mistralai/mistral-small-3.1-24b-instruct:free'
+const DEFAULT_MODEL_ID = process.env.OPENROUTER_MODEL_ID || 'openrouter/free'
 const CLEANUP_INTERVAL = process.env.GEMINAI_CLEANUP_INTERVAL || '-7 days'
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
 const MAX_REQUESTS_PER_WINDOW = 10
@@ -33,17 +33,14 @@ const systemPrompt = `
   => Web Link
   
   \`\`\`
-  Code Block
+  Code Block (always put code snippets in a code block)
   \`\`\`
 
   You do not need to use each of these tags (or any of them), but you should use them if they are appropriate.
   If you are including an http link, make sure to include the protocol (http or https) in the link.
 `
 
-const openai = new OpenAI({
-  baseURL: PUBLIC_BASE_URL,
-  apiKey: PUBLIC_KEY
-})
+const openai = new OpenAI({ baseURL: PUBLIC_BASE_URL, apiKey: PUBLIC_KEY })
 
 const cleanupOldSessions = async (db: SiteOptions['db']) => {
   try {
